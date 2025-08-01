@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-router-dom": "^7.7.1",
+    "simpleheat": "^0.4.0"
+  }
+}

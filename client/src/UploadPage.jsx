@@ -1,0 +1,27 @@
+import { useState, useMemo } from "react";
+
+export function UploadPage() {
+    const [file, setFile] = useState();
+
+    const fileURL = useMemo(() => {
+        console.log("fileURL file=", file);
+        return file ? URL.createObjectURL(file) : undefined;
+    }, [file]);
+
+    const handleFileChange = (event) => {
+        console.log(event.target.files);
+        setFile(event.target.files[0]);
+    };
+    return (
+        <div className="App">
+            <header className="App-header2">
+                <h1 className="TitleUpload">UPLOAD PHOTO</h1>
+                {file ? <button className="ImageUploadButton"></button>: <button className="ImageUploadButton">upload image</button>}
+                <img src={fileURL} className="ImageUploadButton" alt="" />
+                <input className="ImageUploadButtonInput" type="file" onChange={handleFileChange} />
+                <button className="ScanButton">Upload</button>
+            </header>
+        </div>
+    );
+}
+
