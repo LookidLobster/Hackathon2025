@@ -90,7 +90,7 @@
 .ScanButton {
   position: absolute;
   left: 50%;
-  bottom: 40%;
+  bottom: 20%;
   transform: translateX(-50%);
 
 
@@ -128,7 +128,7 @@
 .pictureDetails {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   width: 100%;
   padding: 350px 0px 0px 0px;
 }

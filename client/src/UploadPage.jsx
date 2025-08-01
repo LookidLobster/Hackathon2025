@@ -17,7 +17,7 @@ export function UploadPage() {
         const data = new FormData()
         data.append("file", file)
 
-        const res = await fetch('http://localhost:3000/upload',
+        const res = await fetch('/upload',
             { method: 'POST', body: data }
         )
         const json = await res.json()
@@ -31,15 +31,18 @@ export function UploadPage() {
                 <img src={fileURL} className="ImageUploadButton" alt="" />
                 <input className="ImageUploadButtonInput" type="file" onChange={handleFileChange} />
                 <div className="pictureDetails">
-                    <form method="POST" action="/submit_data">
+                    {/* <form method="POST" action="/submit_data">
                         <label for="comments">Comments:
-                            <input type="text" id="comments" name="comments" required></input>
+                            <input type="text" className="comments" name="comments" required></input>
                         </label><br />
                         <label for="date">Date of the picture:
-                            <input type="date" id="date" name="date" required></input>
+                            <input type="date" className="date" name="date" required></input>
                         </label><br />
-                        <button type="submit">Submit</button>
-                    </form>
+                        <label for="location">Location of picture:
+                            <input className="location" name="location" required></input>
+                        </label><br />
+                        <button type="submit" className="submit">Submit</button>
+                    </form> */}
                 </div>
                 <button className="ScanButton" onClick={uploadScan}>Upload</button>
             </header>
