@@ -1,8 +1,10 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function UploadPage() {
     const [file, setFile] = useState();
     const [result, setResult] = useState(null);
+    const navigate = useNavigate();
 
     const fileURL = useMemo(() => {
         console.log("fileURL file=", file);
@@ -23,7 +25,7 @@ export function UploadPage() {
         )
         const json = await res.json()
         console.log(json)
-        setResult(json);
+        navigate("/result", { state: { result: json } });
     }
     return (
         <div className="App">
@@ -33,7 +35,7 @@ export function UploadPage() {
                 <img src={fileURL} className="ImageUploadButton" alt="" />
                 <input className="ImageUploadButtonInput" type="file" onChange={handleFileChange} />
                 <div className="pictureDetails">
-                    {/* <form method="POST" action="/submit_data">
+                    <form method="POST" action="/submit_data">
                         <label for="comments">Comments:
                             <input type="text" className="comments" name="comments" required></input>
                         </label><br />
@@ -44,15 +46,9 @@ export function UploadPage() {
                             <input className="location" name="location" required></input>
                         </label><br />
                         <button type="submit" className="submit">Submit</button>
-                    </form> */}
+                    </form>
                 </div>
                 <button className="ScanButton" onClick={uploadScan}>Upload</button>
-                {result && (
-                    <div style={{ marginTop: 20 }}>
-                        <h3>Upload Result</h3>
-                        <pre>{JSON.stringify(result, null, 2)}</pre>
-                    </div>
-                )}
             </header>
         </div>
     );

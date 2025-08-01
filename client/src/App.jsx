@@ -12,6 +12,7 @@ import { HomePage } from "./HomePage";
 import { MapPage } from "./MapPage";
 import { UserPage } from "./UserPage";
 import { SignInPage } from "./SignInPage";
+import { ResultPage } from "./ResultPage";
 
 import homeButton from "./assets/home.png"
 import uploadNavButton from "./assets/uploadIcon.png"
@@ -56,6 +57,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/user" element={<UserPage />} />
               <Route path="/map" element={<MapPage />} />
+              <Route path="/result" element={<ResultPage />} />
             </Routes>
           </div>
           <NavBar handleNavigation={handleNavigation} />
