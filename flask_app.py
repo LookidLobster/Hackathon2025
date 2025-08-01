@@ -103,13 +103,14 @@ def upload_photo():
         db.session.add(upload_record)
         db.session.commit()
 
-        problem, message, details = analysis(file_path)
+        problem, message, details, solution = analysis(file_path)
 
         return {
             "message": message,
             "problem": problem,
             "details": details,
-            "id": upload_record.id 
+            "id": upload_record.id,
+            "solution": solution
         }
     else:
         return {'message': 'File not allowed'}

@@ -264,58 +264,68 @@
 }
 
 .result-container {
-  background: rgb(151, 147, 147);
-  padding: 30px 40px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-  max-width: 360px;
+  background: #fefefe;
+  padding: 28px 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
   width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .result-container h3 {
-  margin-bottom: 24px;
-  color: #333;
   text-align: center;
-  font-weight: 600;
-  font-size: 1.75rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #007bff;
 }
 
 .result-row {
-  margin-bottom: 14px;
-  font-size: 1.05rem;
-  color: #444;
   display: flex;
   justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e4e8;
+  font-size: 1.05rem;
+  color: #444;
 }
 
-.result-row strong {
-  color: #1e4e82;
-  font-weight: 700;
-  min-width: 120px;
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-label {
+  font-weight: 600;
   text-transform: capitalize;
+  color: #0056b3;
+  min-width: 110px;
 }
 
-.result-row span {
+.result-value {
   flex: 1;
-  padding-left: 10px;
+  padding-left: 12px;
   word-break: break-word;
-  color: #555;
+  color: #222;
 }
 
 .button-primary {
-  display: block;
-  margin: 30px auto 0 auto;
-  padding: 10px 26px;
-  font-size: 1rem;
+  margin-top: 30px;
+  padding: 12px 28px;
   font-weight: 600;
-  color: white;
+  font-size: 1.1rem;
   background-color: #007bff;
   border: none;
   border-radius: 6px;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  align-self: center;
   width: fit-content;
-  min-width: 160px;
+  min-width: 180px;
   text-align: center;
 }
 
@@ -324,38 +334,16 @@
 }
 
 .no-result {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
-  width: 80%;
   font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-  color: #555;
-  padding: 20px, 0px, 0px, 0px;
+  color: #777;
+  font-size: 1.4rem;
+  padding: 20px;
   text-align: center;
-}
-
-.no-result h2 {
-  font-size: 1.8rem;
-  margin-bottom: 24px;
-}
-
-.no-result button {
-  padding: 10px 26px;
-  font-size: 1rem;
-  font-weight: 600;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.no-result button:hover {
-  background-color: #0056b3;
 }
 
 .signin-box {
@@ -455,16 +443,13 @@ input[type="tel"]:focus {
   border-right: 12px solid transparent;
 }
 
-/* Top triangle (pointing down) */
 .sandglass::before {
   top: 0;
   border-bottom: 20px solid #007bff;
   transform-origin: center top;
-  /* Sand falling effect */
   animation: sand-fall-top 2s linear infinite;
 }
 
-/* Bottom triangle (pointing up) */
 .sandglass::after {
   bottom: 0;
   border-top: 20px solid #007bff;
