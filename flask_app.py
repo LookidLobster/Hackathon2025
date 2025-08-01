@@ -60,7 +60,8 @@ class Upload(db.Model):
     date = db.Column(db.String(20), nullable=True)  
     location = db.Column(db.String(50), nullable=True)  
 
-db.create_all()
+with app.app_context():
+  db.create_all()
 
 def allowed_file(filename):
     return '.' in filename and \
