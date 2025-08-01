@@ -270,11 +270,30 @@
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 350px;
+  max-height: 600px; 
   margin: 0 auto;
   color: #333;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow-y: auto;
+}
+.result-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.result-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.result-container::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 10px;
+}
+
+.result-container::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
 }
 
 .result-container h3 {
