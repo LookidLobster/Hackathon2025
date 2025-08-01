@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export function UploadPage() {
     const [file, setFile] = useState();
     const [result, setResult] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const fileURL = useMemo(() => {
@@ -17,16 +18,24 @@ export function UploadPage() {
     };
 
     const uploadScan = async () => {
-        const data = new FormData()
-        data.append("file", file)
+        if (!file) return;
+        setIsLoading(true);
 
-        const res = await fetch('/upload',
-            { method: 'POST', body: data }
-        )
-        const json = await res.json()
-        console.log(json)
-        navigate("/result", { state: { result: json } });
-    }
+        const data = new FormData();
+        data.append("file", file);
+
+        try {
+            const res = await fetch("/upload", { method: "POST", body: data });
+            const json = await res.json();
+            setIsLoading(false);
+
+            navigate("/result", { state: { result: json } });
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Upload failed", error);
+        }
+    };
+
     return (
         <div className="App">
             <header className="App-header2">
@@ -45,10 +54,12 @@ export function UploadPage() {
                         <label for="location">Location of picture:
                             <input className="location" name="location" required></input>
                         </label><br />
-                        <button type="submit" className="submit">Submit</button>
+                        <button className="ScanButton" onClick={uploadScan} disabled={isLoading}>
+                            Upload
+                        </button>
+                        {isLoading && <p>fetching...</p>}
                     </form>
                 </div>
-                <button className="ScanButton" onClick={uploadScan}>Upload</button>
             </header>
         </div>
     );
