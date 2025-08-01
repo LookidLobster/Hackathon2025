@@ -1,5 +1,6 @@
 from flask import Flask, request, send_from_directory
 from flask import jsonify
+from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -57,8 +58,9 @@ class Upload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(255), nullable=False)
     comments = db.Column(db.Text, nullable=True)
-    date = db.Column(db.String(20), nullable=True)  
-    location = db.Column(db.String(50), nullable=True)  
+    date = db.Column(db.String(20), nullable=True)
+    location = db.Column(db.String(50), nullable=True)  # "lat,lng" string
+    status = db.Column(db.String(20), nullable=False, default='not started')  
 
 with app.app_context():
   db.create_all()
@@ -114,16 +116,38 @@ def upload_photo():
     
 @app.route("/locations")
 def get_locations():
-    uploads = Upload.query.all()
+    uploads = Upload.query.filter(Upload.status != 'done').all()
+
     coords = []
     for upload in uploads:
         if upload.location:
             try:
                 lat_str, lng_str = upload.location.split(",")
-                coords.append([float(lat_str), float(lng_str)])
+                intensity = 0.7
+                if upload.status == "in progress":
+                    intensity = 0.9
+                elif upload.status == "not started":
+                    intensity = 0.6
+
+                coords.append([float(lat_str), float(lng_str), intensity])
             except Exception:
                 continue
     return jsonify(coords)
+
+@app.route("/upload/<int:upload_id>/status", methods=["POST"])
+def update_status(upload_id):
+    new_status = request.json.get("status")
+    if new_status not in ['not started', 'in progress', 'done']:
+        return {"message": "Invalid status value"}, 400
+    
+    upload = Upload.query.get(upload_id)
+    if not upload:
+        return {"message": "Upload not found"}, 404
+    
+    upload.status = new_status
+    db.session.commit()
+    return {"message": "Status updated", "status": upload.status}
+
 
 if __name__ == "__main__":
     public_url = ngrok.connect(5000)

@@ -4,7 +4,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
 
-// HeatmapLayer component to add/remove heatmap layer on map
 function HeatmapLayer({ points }) {
   const map = useMap();
 
@@ -21,7 +20,6 @@ function HeatmapLayer({ points }) {
 
     heatLayer.addTo(map);
 
-    // Fit map bounds to points
     const latLngs = points.map((p) => L.latLng(p[0], p[1]));
     const bounds = L.latLngBounds(latLngs);
     map.fitBounds(bounds);
@@ -35,26 +33,34 @@ function HeatmapLayer({ points }) {
 }
 
 export function MapPage() {
-  const [points, setPoints] = useState([]);
+  const [dbPoints, setDbPoints] = useState([]);
+
+  // Hardcoded sample points concentrated in Bangalore for demonstration
+  const bangaloreSamples = [
+    [12.9765, 77.5990, 0.9],   // MG Road
+    [12.9719, 77.6050, 0.85],  // Brigade Road
+    [12.9352, 77.6245, 0.75],  // Koramangala Main Road
+    [12.9695, 77.7508, 0.8],   // Whitefield Main Road
+    [12.9718, 77.6409, 0.7],   // Indiranagar 100 Feet Road
+    [12.9338, 77.5848, 0.65],  // Jayanagar 4th Block
+    [13.0344, 77.5996, 0.7],   // Hebbal Flyover
+    [12.9043, 77.5847, 0.6],   // Bannerghatta Road
+    [12.8399, 77.6770, 0.75],  // Electronic City
+    [12.9141, 77.6101, 0.65],  // BTM Layout
+  ];
 
   useEffect(() => {
     async function fetchLocations() {
       try {
-        const res = await fetch("/locations");  // your backend endpoint
+        const res = await fetch("/locations"); 
         if (!res.ok) throw new Error("Failed to fetch locations");
         const data = await res.json();
 
-        // data should be an array of [lat, lng, intensity]
-        // if your backend does not include intensity, you can map or assign default values here
-        const pointsWithIntensity = data.map((point) => {
-          // If point length is 2 (lat,lng), add default intensity 0.7
-          if (point.length === 2) {
-            return [...point, 0.7];
-          }
-          return point;
-        });
+        const pointsWithIntensity = data.map((point) =>
+          point.length === 2 ? [...point, 0.7] : point
+        );
 
-        setPoints(pointsWithIntensity);
+        setDbPoints(pointsWithIntensity);
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -63,21 +69,23 @@ export function MapPage() {
     fetchLocations();
   }, []);
 
+  const combinedPoints = [...dbPoints, ...bangaloreSamples];
+
   return (
     <div className="App">
       <div className="App-header2">
-        <h1>Infrastructure Issue Locations</h1>
+        <h1>Heatmap with Database Data</h1>
         <MapContainer
-          center={[12.9716, 77.5946]} // Bangalore city center
+          center={[12.9716, 77.5946]}
           zoom={13}
           style={{ height: "90vh", width: "100%" }}
           scrollWheelZoom={true}
         >
           <TileLayer
-            attribution='© OpenStreetMap contributors'
+            attribution="© OpenStreetMap contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <HeatmapLayer points={points} />
+          <HeatmapLayer points={combinedPoints} />
         </MapContainer>
       </div>
     </div>
