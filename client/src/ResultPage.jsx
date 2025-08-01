@@ -17,7 +17,14 @@ export function ResultPage() {
   return (
     <div style={{ padding: 20 }}>
       <h3>Upload Result</h3>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+
+      {Object.entries(result).map(([key, value]) => (
+        <div key={key} style={{ marginBottom: 10 }}>
+          <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
+          <span>{value?.toString() || ""}</span>
+        </div>
+      ))}
+
       <button onClick={() => navigate("/")}>Upload Another</button>
     </div>
   );
