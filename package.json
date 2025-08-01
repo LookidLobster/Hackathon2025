@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "firebase": "^12.0.0",
     "react-router-dom": "^7.7.1",
     "simpleheat": "^0.4.0"
   }

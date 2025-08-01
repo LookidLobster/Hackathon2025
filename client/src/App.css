@@ -111,6 +111,87 @@
 
 }
 
+.NavBar {
+  width: 327px;
+  height: 70px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #00707E;
+  padding: 0px 0px 0px 0px;
+
+}
+
+/* .shadowNav {
+  width: 300px;
+  height: 70px;
+
+  background: rgba(30, 30, 30, 0.1);
+  filter: blur(15px);
+  border-radius: 20px;
+} */
+
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0.3em;
+  border-radius: 4px;
+}
+
+.Home-inactive {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0.3em;
+  border-radius: 4px;
+}
+
+.uploadNav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0.3em;
+  border-radius: 4px;
+
+}
+
+.mapNav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0.3em;
+  border-radius: 4px;
+
+}
+
+.userNav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0.3em;
+  border-radius: 4px;
+
+}
+
 
 @keyframes logo-spin {
   from {
