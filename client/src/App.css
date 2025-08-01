@@ -264,11 +264,11 @@
 }
 
 .result-container {
-  background: white;
+  background: rgb(151, 147, 147);
   padding: 30px 40px;
   border-radius: 10px;
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-  max-width: 480px;
+  max-width: 360px;
   width: 100%;
 }
 
@@ -289,7 +289,7 @@
 }
 
 .result-row strong {
-  color: #007bff;
+  color: #1e4e82;
   font-weight: 700;
   min-width: 120px;
   text-transform: capitalize;
@@ -433,9 +433,162 @@ input[type="tel"]:focus {
 }
 
 .google-signin-btn:hover {
-  background-color: #357ae8;
+  background-color: #5164BF;
 }
 
+.sandglass {
+  position: relative;
+  width: 24px;
+  height: 40px;
+  margin-right: 12px;
+  animation: sandglass-spin 2s linear infinite;
+}
+
+.sandglass::before,
+.sandglass::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+}
+
+/* Top triangle (pointing down) */
+.sandglass::before {
+  top: 0;
+  border-bottom: 20px solid #007bff;
+  transform-origin: center top;
+  /* Sand falling effect */
+  animation: sand-fall-top 2s linear infinite;
+}
+
+/* Bottom triangle (pointing up) */
+.sandglass::after {
+  bottom: 0;
+  border-top: 20px solid #007bff;
+  transform-origin: center bottom;
+  animation: sand-fall-bottom 2s linear infinite;
+}
+
+@keyframes sandglass-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation to simulate sand flowing */
+@keyframes sand-fall-top {
+  0%, 50% {
+    border-bottom-color: #007bff;
+  }
+  25%, 75% {
+    border-bottom-color: #a3c8ff;
+  }
+}
+
+@keyframes sand-fall-bottom {
+  0%, 50% {
+    border-top-color: #a3c8ff;
+  }
+  25%, 75% {
+    border-top-color: #007bff;
+  }
+}
+
+.loader-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #007bff;
+}
+
+.sandglass {
+  position: relative;
+  width: 24px;
+  height: 40px;
+  margin-right: 12px;
+  animation: sandglass-spin 2s linear infinite;
+}
+
+.sandglass::before,
+.sandglass::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+}
+
+.sandglass::before {
+  top: 0;
+  border-bottom: 20px solid #007bff;
+  transform-origin: center top;
+  animation: sand-fall-top 2s linear infinite;
+}
+
+.sandglass::after {
+  bottom: 0;
+  border-top: 20px solid #007bff;
+  transform-origin: center bottom;
+  animation: sand-fall-bottom 2s linear infinite;
+}
+
+@keyframes sandglass-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sand-fall-top {
+  0%, 50% {
+    border-bottom-color: #007bff;
+  }
+  25%, 75% {
+    border-bottom-color: #a3c8ff;
+  }
+}
+
+@keyframes sand-fall-bottom {
+  0%, 50% {
+    border-top-color: #a3c8ff;
+  }
+  25%, 75% {
+    border-top-color: #007bff;
+  }
+}
+
+.loader-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #007bff;
+}
 
 
 

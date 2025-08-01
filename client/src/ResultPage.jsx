@@ -25,6 +25,7 @@ export function ResultPage() {
       <div className="App-header2">
         <div className="result-container">
           <h3>Upload Success</h3>
+          <h3>AI Overview</h3>
           {Object.entries(result).map(([key, value]) => (
             <div key={key} className="result-row">
               <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>

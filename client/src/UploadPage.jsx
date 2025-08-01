@@ -63,72 +63,80 @@ export function UploadPage() {
   return (
     <div className="App">
       <header className="App-header2">
-        <h1 className="TitleUpload">UPLOAD PHOTO</h1>
-        {file ? (
-          <button className="ImageUploadButton"></button>
+        {isLoading ? (
+          <div className="loader-container">
+            <div className="sandglass"></div>
+            fetching...
+          </div>
         ) : (
-          <button className="ImageUploadButton">upload image</button>
+          <>
+            <h1 className="TitleUpload">UPLOAD PHOTO</h1>
+            {file ? (
+              <button className="ImageUploadButton"></button>
+            ) : (
+              <button className="ImageUploadButton">upload image</button>
+            )}
+            <img src={fileURL} className="ImageUploadButton" alt="" />
+            <input
+              className="ImageUploadButtonInput"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <div className="pictureDetails">
+              <form onSubmit={(e) => e.preventDefault()}>
+                <label htmlFor="comments">
+                  Comments:
+                  <br />
+                  <input
+                    type="text"
+                    className="comments"
+                    name="comments"
+                    required
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                  />
+                </label>
+                <label htmlFor="date">
+                  Date of the picture:
+                  <br />
+                  <input
+                    type="date"
+                    className="date"
+                    name="date"
+                    required
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </label>
+                <label htmlFor="location">
+                  Location of picture:
+                  <br />
+                  <input
+                    type="text"
+                    className="location"
+                    name="location"
+                    required
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Latitude,Longitude"
+                  />
+                  <br />
+                  <button type="button" onClick={getLocation}>
+                    Get Location
+                  </button>
+                </label>
+                <br />
+                <button
+                  className="ScanButton"
+                  onClick={uploadScan}
+                  disabled={isLoading}
+                >
+                  Upload
+                </button>
+              </form>
+            </div>
+          </>
         )}
-        <img src={fileURL} className="ImageUploadButton" alt="" />
-        <input
-          className="ImageUploadButtonInput"
-          type="file"
-          onChange={handleFileChange}
-        />
-        <div className="pictureDetails">
-          <form onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="comments">
-              Comments:
-              <br />
-              <input
-                type="text"
-                className="comments"
-                name="comments"
-                required
-                value={comments}
-                onChange={(e) => setComments(e.target.value)}
-              />
-            </label>
-            <label htmlFor="date">
-              Date of the picture:
-              <br />
-              <input
-                type="date"
-                className="date"
-                name="date"
-                required
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </label>
-            <label htmlFor="location">
-              Location of picture:
-              <br />
-              <input
-                type="text"
-                className="location"
-                name="location"
-                required
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Latitude,Longitude"
-              />
-              <br />
-              <button type="button" onClick={getLocation}>
-                Get Location
-              </button>
-            </label>
-            <br />
-            <button
-              className="ScanButton"
-              onClick={uploadScan}
-              disabled={isLoading}
-            >
-              Upload
-            </button>
-            {isLoading && <p>fetching...</p>}
-          </form>
-        </div>
       </header>
     </div>
   );
