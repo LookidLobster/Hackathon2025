@@ -59,9 +59,9 @@ export function MapPage() {
   }, []);
 
   return (
-    <div className="App" style={{ height: "100vh" }}>
+    <div className="App">
       <div className="App-header2">
-        <h1>Bangalore Heatmap - Infrastructure Issue Locations</h1>
+        <h1>Heatmap - Infrastructure Issue Locations</h1>
         <MapContainer
           center={[12.9716, 77.5946]} 
           zoom={13}

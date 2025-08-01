@@ -148,6 +148,22 @@ def update_status(upload_id):
     db.session.commit()
     return {"message": "Status updated", "status": upload.status}
 
+@app.route("/api/uploads")
+def get_uploads():
+    uploads = Upload.query.all()
+    data = [
+        {
+            "id": u.id,
+            "filename": u.filename,
+            "comments": u.comments,
+            "date": u.date,
+            "location": u.location,
+            "status": u.status,
+        }
+        for u in uploads
+    ]
+    return jsonify(data)
+
 
 if __name__ == "__main__":
     public_url = ngrok.connect(5000)

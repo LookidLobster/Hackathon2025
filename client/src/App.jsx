@@ -13,6 +13,7 @@ import { MapPage } from "./MapPage";
 import { UserPage } from "./UserPage";
 import { SignInPage } from "./SignInPage";
 import { ResultPage } from "./ResultPage";
+import { DataPage } from "./DatabasePage";
 
 import homeButton from "./assets/home.png"
 import uploadNavButton from "./assets/uploadIcon.png"
@@ -58,6 +59,7 @@ function App() {
               <Route path="/user" element={<UserPage />} />
               <Route path="/map" element={<MapPage />} />
               <Route path="/result" element={<ResultPage />} />
+              <Route path="/dataBase" element={<DataPage />} />
             </Routes>
           </div>
           <NavBar handleNavigation={handleNavigation} />
