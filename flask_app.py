@@ -1,60 +1,56 @@
-import os, base64
-from flask import Flask, render_template, flash, request, redirect, url_for, send_from_directory
+import os
+from flask import Flask, request, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+from pyngrok import ngrok
+
+# Set ngrok authtoken at the beginning
+token = "2cg7vApU7WhfBvYHHgbtW8kk8pF_5R7kxDFZBjtF4sEmeZuao"
+ngrok.set_auth_token(token)
 
 UPLOAD_FOLDER = '/tmp'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-# # Example: list of lat/lng points (simulate user reports)
-# locations = [
-#     {"lat": 37.782, "lng": -122.447},
-#     {"lat": 37.782, "lng": -122.445},
-#     {"lat": 37.785, "lng": -122.442},
-#     {"lat": 37.779, "lng": -122.448},
-#     # add more for testing
-# ]
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-# @app.route('/api/locations')
-# def get_locations():
-#     return jsonify(locations)
-
-app = Flask(__name__, static_folder='client/dist')
+app = Flask(__name__, static_folder='client/dist', static_url_path='')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-print(app.config)
 
-def read_file(path):
-    with open(path, 'rb') as f:
-        return f.read()
+def allowed_file(filename):
+    return '.' in filename and \
+    filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/")
+def serve_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 @app.post("/upload")
-async def uploadPhoto():
+def upload_photo():
     if 'file' not in request.files:
-        flash('No file part')
         return {'message': 'No file part'}
     file = request.files['file']
 
     if file.filename == "":
-        flash('No selected file')
         return {'message': 'No selected file'}
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
+# call analysis function   
+# from main_notebook import analysis
+# problem, message, details = analysis(file_path)
+# return {'problem': problem, 'message': message, 'details': details}
         return {'message': 'success'}
     else:
         return {'message': 'File not allowed'}
-    
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/download_file")
-def downloadFile():
-    return render_template("downloadFile.html")
-
-        
-
-if __name__ == "__main__": 
-    app.run(debug=True, use_reloader=True, threaded=True) 
+if __name__ == "__main__":
+    public_url = ngrok.connect(5000)
+    print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000\"".format(public_url))
+    app.run()
