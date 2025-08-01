@@ -125,6 +125,17 @@
 
 }
 
+.pictureDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 350px 0px 0px 0px;
+}
+.pictureDetails {
+  outline: 2px solid yellow;
+}
+
 /* .shadowNav {
   width: 300px;
   height: 70px;

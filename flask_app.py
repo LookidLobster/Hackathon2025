@@ -3,6 +3,9 @@ from flask import Flask, request, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 from pyngrok import ngrok
+from ollama import chat
+from pydantic import BaseModel
+from pathlib import Path
 
 # Set ngrok authtoken at the beginning
 token = "2cg7vApU7WhfBvYHHgbtW8kk8pF_5R7kxDFZBjtF4sEmeZuao"
@@ -14,6 +17,40 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__, static_folder='client/dist', static_url_path='')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+class ImageAnalysisResult(BaseModel):
+    problem: bool
+    message: str
+    details: str
+
+def analysis(path: Path) -> str:
+  response = chat(
+    model="gemma3",
+    format=ImageAnalysisResult.model_json_schema(),  # Instruct the model to reply with this schema
+    messages=[
+        {
+            "role": "user",
+            "content": (
+                "Analyze the image, and return a JSON description based on the given schema. For the message field, Provide a message that we can send to business owners that could potentially fix the problem. These include potholes, damages in infrastructure, or anything else that can be seen in the image. No need to include any names. " +
+                "If no issues are found, return a message indicating everything is fine."
+            ),
+            "images": [path],                 # Supply the generated PNG (super important part)
+        }
+    ],
+    options={"temperature": 0},                   # Deterministic output
+)
+
+  image_analysis = ImageAnalysisResult.model_validate_json(response.message.content)
+
+
+  problem = image_analysis.problem
+  message = image_analysis.message
+  details = image_analysis.details
+
+
+  with open('analysis.json', 'w') as f:
+    f.write(response.message.content)
+  return problem, message, details
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -42,11 +79,8 @@ def upload_photo():
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
-# call analysis function   
-# from main_notebook import analysis
-# problem, message, details = analysis(file_path)
-# return {'problem': problem, 'message': message, 'details': details}
-        return {'message': 'success'}
+        problem, message, details = analysis(file_path)
+        return {'problem': problem, 'message': message, 'details': details}
     else:
         return {'message': 'File not allowed'}
 
