@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 
 export function UploadPage() {
     const [file, setFile] = useState();
+    const [result, setResult] = useState(null);
 
     const fileURL = useMemo(() => {
         console.log("fileURL file=", file);
@@ -22,6 +23,7 @@ export function UploadPage() {
         )
         const json = await res.json()
         console.log(json)
+        setResult(json);
     }
     return (
         <div className="App">
@@ -45,6 +47,12 @@ export function UploadPage() {
                     </form> */}
                 </div>
                 <button className="ScanButton" onClick={uploadScan}>Upload</button>
+                {result && (
+                    <div style={{ marginTop: 20 }}>
+                        <h3>Upload Result</h3>
+                        <pre>{JSON.stringify(result, null, 2)}</pre>
+                    </div>
+                )}
             </header>
         </div>
     );
