@@ -498,7 +498,6 @@ input[type="tel"]:focus {
   }
 }
 
-/* Animation to simulate sand flowing */
 @keyframes sand-fall-top {
 
   0%,
@@ -570,6 +569,50 @@ input[type="tel"]:focus {
   animation: sand-fall-bottom 2s linear infinite;
 }
 
+.home-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #000000;
+  margin-top: 60px;
+  margin-bottom: 16px;
+  user-select: none;
+  text-align: center;
+}
+
+.home-description {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #444;
+  margin: 0 30px 48px 30px;
+  text-align: center;
+  line-height: 1.5;
+  user-select: none;
+}
+
+.home-about-button {
+  background-color: #3c4147;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 14px 42px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  user-select: none;
+  align-self: center;
+  box-shadow: 0 5px 15px rgba(23, 26, 28, 0.3);
+}
+
+.home-about-button:hover,
+.home-about-button:focus {
+  background-color: #3c4147;
+  outline: none;
+  box-shadow: 0 5px 20px rgba(39, 41, 44, 0.5);
+}
+
 @keyframes sandglass-spin {
   0% {
     transform: rotate(0deg);
@@ -620,6 +663,59 @@ input[type="tel"]:focus {
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
   color: #007bff;
+}
+
+.userProfileHeader {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 91px;
+  letter-spacing: 0.003em;
+
+  color: #878787;
+}
+
+.profileHolder {
+  display: flex;
+  width: 130px;
+  height: 130px;
+  background-color: #3c4147;
+  border-radius: 80px;
+}
+
+.personal-info-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  user-select: none;
+}
+
+.personal-input {
+  margin-top: 6px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  color: #444;
+}
+
+.personal-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
 }
 
 
