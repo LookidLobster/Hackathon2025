@@ -1,11 +1,11 @@
 const config = {
-  apiKey: "AIzaSyBP81_FnpfiakVcHbhB3c2S1RnqCjicynA",
-  authDomain: "greentrack-eef5b.firebaseapp.com",
-  projectId: "greentrack-eef5b",
-  storageBucket: "greentrack-eef5b.firebasestorage.app",
-  messagingSenderId: "184536086803",
-  appId: "1:184536086803:web:0c4480d0cfbe2b774fc2e6",
-  measurementId: "G-H7JDM4NNN4"
+  apiKey: "AIzaSyB81vJp_4sVlwHRbPmn91hDfSJ7OgwmW0Q",
+  authDomain: "infraalert-c3de5.firebaseapp.com",
+  projectId: "infraalert-c3de5",
+  storageBucket: "infraalert-c3de5.firebasestorage.app",
+  messagingSenderId: "851281211205",
+  appId: "1:851281211205:web:9bc3b446cf9b6d9481182c",
+  measurementId: "G-NHE2PT3BTX"
 };
 
 export default config
