@@ -16,22 +16,26 @@ class ImageAnalysisResult(BaseModel):
     problem: bool
     message: str
     details: str
+    solution: str
+
+import ollama
 
 def analysis(path: Path) -> str:
-  response = chat(
+  client = ollama.Client()
+  response = client.chat(
     model="gemma3",
-    format=ImageAnalysisResult.model_json_schema(),  
+    format=ImageAnalysisResult.model_json_schema(),  # Instruct the model to reply with this schema
     messages=[
         {
             "role": "user",
             "content": (
-                "Analyze the image, and return a JSON description based on the given schema. For the message field, Provide a message that we can send to business owners that could potentially fix the problem. These include potholes, damages in infrastructure, or anything else that can be seen in the image. No need to include any names. " +
-                "If no issues are found, return a message indicating everything is fine."
+                "Analyze the image, and return a JSON description based on the given schema. For the message field, Provide a message that we can send to business owners about any potential issues. These include potholes, damages in infrastructure, or anything else that can be seen in the image. No need to include any names. For the solution field, describe to the user how the problem is going to be solved by a potential business." +
+                "If no issues are found, leave the solution and message field blank"
             ),
-            "images": [path],                 
+            "images": [path],                 # Supply the generated PNG (super important part)
         }
     ],
-    options={"temperature": 0},              
+    options={"temperature": 0},                   # Deterministic output
 )
 
   image_analysis = ImageAnalysisResult.model_validate_json(response.message.content)
@@ -40,8 +44,10 @@ def analysis(path: Path) -> str:
   problem = image_analysis.problem
   message = image_analysis.message
   details = image_analysis.details
+  solution = image_analysis.solution
 
-  return problem, message, details
+
+  return problem, message, details, solution
 
 UPLOAD_FOLDER = '/tmp'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
