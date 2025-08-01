@@ -11,7 +11,6 @@ export function SignInPage(props) {
         const auth = getAuth()
         const provider = new GoogleAuthProvider()
         provider.addScope("https://www.googleapis.com/auth/contacts.readonly")
-        // NOTE: App domain must be authorized in Firebase Console / Auth / Sign-in methods.
         try {
             let result = await signInWithPopup(auth, provider)
             console.log("signInWithPopup result", result)

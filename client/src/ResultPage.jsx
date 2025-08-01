@@ -16,7 +16,7 @@ export function ResultPage() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h3>Upload Result</h3>
+      <h3>Upload Success</h3>
 
       {Object.entries(result).map(([key, value]) => (
         <div key={key} style={{ marginBottom: 10 }}>
