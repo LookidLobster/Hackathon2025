@@ -30,8 +30,7 @@ export function UploadPage() {
                 {file ? <button className="ImageUploadButton"></button> : <button className="ImageUploadButton">upload image</button>}
                 <img src={fileURL} className="ImageUploadButton" alt="" />
                 <input className="ImageUploadButtonInput" type="file" onChange={handleFileChange} />
-                <button className="ScanButton">Next</button>
-                {/* <button className="ScanButton" onClick={uploadScan}>Upload</button> */}
+                <button className="ScanButton" onClick={uploadScan}>Upload</button>
             </header>
         </div>
     );
