@@ -35,7 +35,7 @@ def analysis(path: Path) -> str:
             "role": "user",
             "content": (
                 "Analyze the image, and return a JSON description based on the given schema. For the message field, Provide a message that we can send to business owners about any potential issues. These include potholes, damages in infrastructure, or anything else that can be seen in the image. No need to include any names. For the solution field, describe to the user how the problem is going to be solved by a potential business." +
-                "If no issues are found, leave the solution and message field blank"
+                "If no issues are found, leave the solution and message field blank. Do not suggest safety inspections as a extra precaution even when there are no problems."
             ),
             "images": [path],                 # Supply the generated PNG (super important part)
         }
