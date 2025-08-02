@@ -55,7 +55,8 @@ def analysis(path: Path) -> str:
   return problem, message, details, solution
 
 UPLOAD_FOLDER = '/tmp'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'mov', 'avi', 'mkv'}
+
 
 app = Flask(__name__, static_folder='client/dist')
 CORS(app)
@@ -88,6 +89,10 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
+def is_video(filename):
+    ext = filename.rsplit('.', 1)[1].lower()
+    return ext in {'mp4', 'mov', 'avi', 'mkv'}
+
 @app.post("/upload")
 def upload_photo():
     if 'file' not in request.files:
@@ -114,12 +119,16 @@ def upload_photo():
         db.session.add(upload_record)
         db.session.commit()
 
-        problem, message, details, solution = analysis(file_path)
+        if not is_video(filename):
+            problem, message, details, solution = analysis(file_path)
+            sms_message = message
+        else:
+            problem, message, details, solution = False, "Video uploaded successfully.", "", ""
+            sms_message = "A new video has been uploaded for review."
 
-        message = SmsMessage(to='919741057312', from_='InfraAlert', text=message)
-        response = vonage.sms.send(message)
+        message_obj = SmsMessage(to='919741057312', from_='InfraAlert', text=sms_message)
+        response = vonage.sms.send(message_obj)
         print(response.model_dump_json(exclude_unset=True))
-
 
         return {
             "message": message,
@@ -130,6 +139,7 @@ def upload_photo():
         }
     else:
         return {'message': 'File not allowed'}
+
     
 @app.route("/locations")
 def get_locations():
