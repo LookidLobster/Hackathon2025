@@ -116,8 +116,8 @@ def upload_photo():
 
         problem, message, details, solution = analysis(file_path)
 
-        message = SmsMessage(to='919741057312', from_='InfraAlert', text=message)
-        response = vonage.sms.send(message)
+        message1 = SmsMessage(to='919741057312', from_='InfraAlert', text=message)
+        response = vonage.sms.send(message1)
         print(response.model_dump_json(exclude_unset=True))
 
 
