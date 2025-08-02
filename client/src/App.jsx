@@ -9,7 +9,7 @@ import simpleheat from 'simpleheat';
 import { UploadPage } from "./UploadPage";
 import { LoadingPage } from "./LoadingPage";
 import { HomePage } from "./HomePage";
-import { MapPage } from "./MapPage";
+import { MapPage } from "./mapPagetest";
 import { UserPage } from "./UserPage";
 import { SignInPage } from "./SignInPage";
 import { ResultPage } from "./ResultPage";
