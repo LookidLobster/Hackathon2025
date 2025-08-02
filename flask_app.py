@@ -11,10 +11,6 @@ from ollama import chat
 from pathlib import Path
 from vonage import Vonage, Auth
 from vonage_sms import SmsMessage
-secret = "mnbd6STwSIUSQDdA"
-key="6540c50a"
-vonage = Vonage(auth=Auth(api_key=key, api_secret=secret))
-
 
 
 class ImageAnalysisResult(BaseModel):
@@ -115,10 +111,6 @@ def upload_photo():
         db.session.commit()
 
         problem, message, details, solution = analysis(file_path)
-
-        message1 = SmsMessage(to='919741057312', from_='InfraAlert', text=message)
-        response = vonage.sms.send(message1)
-        print(response.model_dump_json(exclude_unset=True))
 
 
         return {
