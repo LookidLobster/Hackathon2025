@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
+import html2canvas from "html2canvas";
 
 function HeatmapLayer({ points }) {
   const map = useMap();
@@ -52,10 +53,11 @@ export function MapPage() {
   useEffect(() => {
     async function fetchLocations() {
       try {
-        const res = await fetch("/locations"); 
+        const res = await fetch("/locations");
         if (!res.ok) throw new Error("Failed to fetch locations");
         const data = await res.json();
 
+        // Ensure all points have intensity (default 0.7)
         const pointsWithIntensity = data.map((point) =>
           point.length === 2 ? [...point, 0.7] : point
         );
@@ -71,10 +73,43 @@ export function MapPage() {
 
   const combinedPoints = [...dbPoints, ...bangaloreSamples];
 
+  const exportMapAsImage = () => {
+    const mapElement = document.querySelector(".leaflet-container");
+    if (!mapElement) {
+      alert("Map element not found");
+      return;
+    }
+    html2canvas(mapElement, { useCORS: true }).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = "heatmap.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  };
+
   return (
     <div className="App">
       <div className="App-header2">
         <h1>Heatmap with Database Data</h1>
+        <button
+          onClick={exportMapAsImage}
+          style={{
+            backgroundColor: "#173c60ff",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontWeight: "600",
+            fontFamily: "Poppins",
+            boxShadow: "0 2px 6px rgba(0, 123, 255, 0.4)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#162c44ff")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#0f2033ff")}
+        >
+          Export Heatmap as PNG
+        </button>
         <MapContainer
           center={[12.9716, 77.5946]}
           zoom={13}
